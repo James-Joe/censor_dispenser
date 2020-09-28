@@ -8,6 +8,7 @@ import function_2
 # or      python3 -m unittest -v
 
 class TestProprietaryTerms(unittest.TestCase):
+    terms = ["him", "her"]
 
     def setUp(self):
         # These are command run before the test to create the proper environment
@@ -18,7 +19,7 @@ class TestProprietaryTerms(unittest.TestCase):
 
         self.email2_base = open("email_two.base", "r")
         self.proprietary_terms_base = self.email2_base.read()
-        #self.maxDiff = None
+        self.maxDiff = None
 
     def tearDown(self):
         # These commands are run after the test methods to clean up the environment.
@@ -34,6 +35,25 @@ class TestProprietaryTerms(unittest.TestCase):
         # loaded in the setup.
 
         self.assertEqual(function_2.cato(function_2.proprietary_terms, function_2.email_two), self.proprietary_terms_base)
+    
+    def test_alpha_substring(self):
+        content ="AAhimaa ZZherzz"
+        expected = content
+        self.assertEqual(function_2.cato(self.terms, content), expected)
+    
+    def test_numeric_substring(self):
+        content = "123him456 789her012"
+        expected = content
+        self.assertEqual(function_2.cato(self.terms, content), expected)
+    
+    def test_whitespace(self):
+        content = " him  her "
+        expected = " [REDACTED]  [REDACTED] "
+        self.assertEqual(function_2.cato(self.terms, content), expected)
+
+    def test_punctuation(self):
+        content = ".him. ,her, ?him? !her! \"him\" \'her\' :him: ;her; <him> (her)"
+        expected = ". [REDACTED] . , [REDACTED] , ? [REDACTED] ? ! [REDACTED] ! \" [REDACTED] \" \' [REDACTED] \' : [REDACTED] : ; [REDACTED] ; < [REDACTED] > ( [REDACTED] )"
 
 if __name__ == '__main__':
     unittest.main()

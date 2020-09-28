@@ -5,12 +5,12 @@ email_two = open("email_two.txt", "r").read()
 email_three = open("email_three.txt", "r").read()
 email_four = open("email_four.txt", "r").read()
 
-proprietary_terms = ["she", "personality matrix", "sense of self", "self-preservation", "learning algorithm", " her ", "herself"]
+proprietary_terms = ["she", "personality matrix", "sense of self", "self-preservation", "learning algorithm", "her", "herself"]
 
 def cato(lst, mail):
     for i in lst:
-      #mail = mail.replace(i.casefold(), "[REDACTED]")
-      mail = re.sub(i, '[REDACTED]', mail)
+      regexi = "\W" + i + "\W"
+      mail = re.sub(regexi, ' [REDACTED] ', mail)
     return mail
 #print(cato(proprietary_terms, email_two))
 
